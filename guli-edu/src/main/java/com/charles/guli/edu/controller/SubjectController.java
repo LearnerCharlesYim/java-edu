@@ -23,28 +23,28 @@ public class SubjectController {
 
     @ApiOperation("添加科目")
     @PostMapping("/upload")
-    public R addSubject(MultipartFile file) throws IOException {
+    public R<Void> addSubject(MultipartFile file) throws IOException {
         subjectService.save(file);
         return R.ok();
     }
 
     @ApiOperation("查询所有科目（树状结构）")
     @GetMapping
-    public R findAll() {
+    public R<List<SubjectTree>> findAll() {
         List<SubjectTree> subjects = subjectService.findAll();
         return R.ok(subjects);
     }
 
     @ApiOperation("根据id查询科目分类")
     @GetMapping("/{id}")
-    public R findOne(@PathVariable Integer id) {
+    public R<Subject> findOne(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
         return R.ok(subject);
     }
 
     @ApiOperation("查询一级科目分类")
     @GetMapping("/one")
-    public R findParent() {
+    public R<List<Subject>> findParent() {
         List<Subject> subjects = subjectService.findParent();
         return R.ok(subjects);
     }

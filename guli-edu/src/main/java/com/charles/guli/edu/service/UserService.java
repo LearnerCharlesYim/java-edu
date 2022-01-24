@@ -48,4 +48,8 @@ public class UserService {
         StpUtil.login(user.getId());
         return StpUtil.getTokenValue();
     }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 }

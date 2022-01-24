@@ -21,28 +21,28 @@ public class MenuController {
 
     @ApiOperation("添加菜单")
     @PostMapping
-    public R addMenu(@RequestBody MenuVo menuParam) {
+    public R<Void> addMenu(@RequestBody MenuVo menuParam) {
         menuService.addMenu(menuParam);
         return R.ok();
     }
 
     @ApiOperation("查询菜单")
     @GetMapping
-    public R treeMenu() {
+    public R<List<MenuTree>> treeMenu() {
         List<MenuTree> menus = menuService.treeMenu();
         return R.ok(menus);
     }
 
     @ApiOperation("修改菜单")
     @PutMapping("/{id}")
-    public R update(@PathVariable Integer id, @RequestBody MenuVo menuVo) {
+    public R<Void> update(@PathVariable Integer id, @RequestBody MenuVo menuVo) {
         menuService.update(id, menuVo);
         return R.ok();
     }
 
     @ApiOperation("删除菜单")
     @DeleteMapping("/{id}")
-    public R remove(@PathVariable Integer id) {
+    public R<Void> remove(@PathVariable Integer id) {
         menuService.remove(id);
         return R.ok();
     }

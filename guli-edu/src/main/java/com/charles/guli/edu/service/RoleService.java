@@ -60,7 +60,8 @@ public class RoleService {
     }
 
     public PageBean<RoleDto> findPage(Integer currentPage, Integer pageSize, RoleQuery roleQuery) {
-        Page<RoleDto> page = roleRepository.findCustom(roleQuery, PageRequest.of(currentPage - 1, pageSize, Sort.by(Sort.Direction.ASC, "sort")));
+        Page<RoleDto> page =
+                roleRepository.findCustom(roleQuery, PageRequest.of(currentPage - 1, pageSize, Sort.by(Sort.Direction.ASC, "sort")));
         PageBean<RoleDto> result = new PageBean<>();
 
         result.setCurrentPage(currentPage);

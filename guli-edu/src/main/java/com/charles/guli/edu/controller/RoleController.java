@@ -23,7 +23,7 @@ public class RoleController {
 
     @ApiOperation("角色列表")
     @PostMapping("/{currentPage}/{pageSize}")
-    public R roleList(@PathVariable Integer currentPage,
+    public R<PageBean<RoleDto>> roleList(@PathVariable Integer currentPage,
                       @PathVariable Integer pageSize,
                       @RequestBody(required = false) RoleQuery roleQuery) {
         if (roleQuery == null) roleQuery = new RoleQuery();
@@ -33,21 +33,21 @@ public class RoleController {
 
     @ApiOperation("根据角色ID查询详情")
     @GetMapping("{id}")
-    public R findById(@PathVariable Integer id) {
+    public R<RoleInfo> findById(@PathVariable Integer id) {
         RoleInfo role = roleService.findById(id);
         return R.ok(role);
     }
 
     @ApiOperation("角色添加")
     @PostMapping
-    public R addRole(@RequestBody @Validated RoleVo roleVo) {
+    public R<Void> addRole(@RequestBody @Validated RoleVo roleVo) {
         roleService.addRole(roleVo);
         return R.ok();
     }
 
     @ApiOperation("角色修改")
     @PutMapping("{id}")
-    public R updateRole(@PathVariable Integer id, @Validated @RequestBody RoleVo roleVo) {
+    public R<Void> updateRole(@PathVariable Integer id, @Validated @RequestBody RoleVo roleVo) {
         roleService.updateRole(id, roleVo);
         return R.ok();
     }

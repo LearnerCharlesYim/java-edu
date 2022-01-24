@@ -11,8 +11,8 @@ public class TestR {
 
     @Test
     public void testR() throws JsonProcessingException {
-        R result = R.ok().data("world").data("name", "Tom").data("age",18).message("hhh");
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writeValueAsString(result));
+//        R result = R.ok().data("world").data("name", "Tom").data("age",18).message("hhh");
+//        ObjectMapper mapper = new ObjectMapper();
+//        System.out.println(mapper.writeValueAsString(result));
     }
 }

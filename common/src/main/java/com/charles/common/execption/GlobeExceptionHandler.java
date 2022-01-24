@@ -21,7 +21,7 @@ import javax.validation.ConstraintViolationException;
 public class GlobeExceptionHandler {
 
     @ExceptionHandler(BizException.class)
-    private R bizExceptionHandler(BizException e) {
+    private R<Void> bizExceptionHandler(BizException e) {
         log.error("发送业务异常！原因是：{}", e.getErrorMsg());
         return R.fail(e.getErrorCode(), e.getErrorMsg());
     }
@@ -29,7 +29,7 @@ public class GlobeExceptionHandler {
     @ExceptionHandler({BindException.class,
             ConstraintViolationException.class,
             MethodArgumentNotValidException.class})
-    public R handleParamValidateException(Exception e) {
+    public R<Void> handleParamValidateException(Exception e) {
         if (e instanceof BindException) {
             // ex.getFieldError():随机返回一个对象属性的异常信息。如果要一次性返回所有对象属性异常信息，
             // 则调用ex.getAllErrors()
@@ -49,7 +49,7 @@ public class GlobeExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public R handlerRequestMethodException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+    public R<Void> handlerRequestMethodException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
         log.error("{}不支持{}方法", requestURI, method);
@@ -61,7 +61,7 @@ public class GlobeExceptionHandler {
             HttpMessageNotReadableException.class,
             MethodArgumentTypeMismatchException.class
     })
-    private R paramExceptionHandler(Exception e) {
+    private R<Void> paramExceptionHandler(Exception e) {
         if (e instanceof HttpMediaTypeNotSupportedException) {
             return R.fail(ResultCode.PARAM_TYPE_ERROR);
         } else if (e instanceof MethodArgumentTypeMismatchException) {

@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Api(tags = "后台登录管理模块")
 @RequiredArgsConstructor
 @RestController
@@ -20,15 +22,14 @@ public class LoginController {
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
-    public R login(@RequestBody LoginParam loginParam) {
+    public R<Dict> login(@RequestBody LoginParam loginParam) {
         String token = userService.login(loginParam);
-//        return R.ok(Dict.create().set("token", token));
-        return R.ok().data("token", token);
+        return R.ok(Dict.create().set("token", token));
     }
 
     @ApiOperation("获取登录用户信息")
     @GetMapping("/info")
-    public R getUserInfo() {
+    public R<Dict> getUserInfo() {
         return R.ok(Dict.create()
                 .set("roles", "['admin']")
                 .set("name", "admin")
@@ -37,7 +38,7 @@ public class LoginController {
 
     @ApiOperation("注销接口")
     @PostMapping("/logout")
-    public R logout() {
+    public R<Void> logout() {
         StpUtil.logout();
         return R.ok();
     }
