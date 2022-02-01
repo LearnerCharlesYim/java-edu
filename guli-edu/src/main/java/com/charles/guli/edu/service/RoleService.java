@@ -1,5 +1,6 @@
 package com.charles.guli.edu.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.charles.common.domain.PageBean;
 import com.charles.common.utils.PropertyUtils;
 import com.charles.guli.edu.domain.dto.RoleDto;
@@ -12,6 +13,7 @@ import com.charles.guli.edu.domain.vo.RoleVo;
 import com.charles.guli.edu.repository.MenuRepository;
 import com.charles.guli.edu.repository.RoleMenuRepository;
 import com.charles.guli.edu.repository.RoleRepository;
+import com.charles.guli.edu.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,7 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final RoleMenuRepository roleMenuRepository;
     private final MenuRepository menuRepository;
+    private final UserRoleRepository userRoleRepository;
 
 
     public void addRole(RoleVo roleVo) {
@@ -109,5 +112,10 @@ public class RoleService {
                     return childTree;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<String> findCurrentRoles() {
+        List<Integer> roleIds = userRoleRepository.findRoleIdsByUserId(StpUtil.getLoginIdAsInt());
+        return roleRepository.findRoleCodes(roleIds);
     }
 }

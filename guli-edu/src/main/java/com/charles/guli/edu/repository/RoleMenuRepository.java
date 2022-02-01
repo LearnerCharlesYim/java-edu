@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 
 public interface RoleMenuRepository extends JpaRepository<RoleMenu, Integer> {
@@ -15,4 +16,7 @@ public interface RoleMenuRepository extends JpaRepository<RoleMenu, Integer> {
 
     @Query("select rm.menuId from RoleMenu rm where rm.roleId = ?1")
     List<Integer> findCustomMenuIds(Integer roleId);
+
+    @Query("select rm.menuId from RoleMenu rm where rm.roleId in ?1")
+    Set<Integer> findMenuIdsByRoleIds(List<Integer> roleIds);
 }

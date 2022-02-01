@@ -27,6 +27,15 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

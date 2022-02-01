@@ -1,10 +1,14 @@
 package com.charles.guli.edu.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.charles.common.utils.PropertyUtils;
 import com.charles.guli.edu.domain.dto.MenuTree;
 import com.charles.guli.edu.domain.pojo.Menu;
 import com.charles.guli.edu.domain.vo.MenuVo;
 import com.charles.guli.edu.repository.MenuRepository;
+import com.charles.guli.edu.repository.RoleMenuRepository;
+import com.charles.guli.edu.repository.RoleRepository;
+import com.charles.guli.edu.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -19,6 +24,8 @@ import java.util.stream.Collectors;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final RoleMenuRepository roleMenuRepository;
 
     public void addMenu(MenuVo menuParam) {
         Menu menu = new Menu();
@@ -72,5 +79,16 @@ public class MenuService {
         menuRepository.deleteById(id);
         List<Menu> children = menuRepository.findByParentId(id);
         children.forEach(menu -> remove(menu.getId()));
+    }
+
+    public List<String> findCurrentMenus() {
+        List<Integer> roleIds = userRoleRepository.findRoleIdsByUserId(StpUtil.getLoginIdAsInt());
+        Set<Integer> menuIds = roleMenuRepository.findMenuIdsByRoleIds(roleIds);
+        List<String> paths = menuRepository.findPath(menuIds);
+        return paths.stream().filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    public List<String> findAllPaths() {
+        return menuRepository.findAllPaths();
     }
 }

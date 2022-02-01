@@ -2,6 +2,7 @@ package com.charles.guli.edu.domain.dto;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,6 +25,8 @@ public class MenuTree {
     private Boolean status;
 
     private Integer parentId;
+
+    private Date createdTime;
 
     private List<MenuTree> children;
 

@@ -54,7 +54,7 @@ public class TeacherService {
 
     public Teacher findById(Integer id) {
         Optional<Teacher> optional = teacherRepository.findById(id);
-        if (optional.isEmpty()) throw new BizException(ResultCode.USER_ACCOUNT_NOT_EXIST);
+        if (optional.isEmpty()) throw new BizException(ResultCode.TEACHER_NOT_FOUND);
         return optional.get();
     }
 

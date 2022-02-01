@@ -6,6 +6,8 @@
     <modules>
         <module>guli-edu</module>
         <module>common</module>
+        <module>sys-share</module>
+        <module>logging-tool</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,6 +24,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-plugin.version>3.8.0</maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -76,8 +79,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
             </plugin>
         </plugins>
     </build>

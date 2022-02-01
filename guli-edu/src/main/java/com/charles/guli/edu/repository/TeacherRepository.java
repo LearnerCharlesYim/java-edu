@@ -5,9 +5,10 @@ import com.charles.guli.edu.domain.vo.TeacherQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
+public interface TeacherRepository extends JpaRepository<Teacher, Integer>, JpaSpecificationExecutor<Teacher> {
 
     @Query("select t from Teacher t where" +
             "(:#{#teacherQuery.name} is null or t.name like %:#{#teacherQuery.name}%) and " +

@@ -21,11 +21,11 @@ public enum ResultCode implements BaseErrorInfoInterface {
     USER_ACCOUNT_EXPIRED(2002, "账号已过期"),
     USER_CREDENTIALS_ERROR(2003, "账号或密码错误"),
     USER_CREDENTIALS_EXPIRED(2004, "密码过期"),
-    USER_ACCOUNT_DISABLE(2005, "账号不可用"),
-    USER_ACCOUNT_LOCKED(2006, "账号被锁定"),
-    USER_ACCOUNT_NOT_EXIST(2007, "账号不存在"),
-    USER_ACCOUNT_ALREADY_EXIST(2008, "账号已存在"),
-    USER_ACCOUNT_USE_BY_OTHERS(2009, "账号下线"),
+    TOKEN_NOT_PROVIDE(2005, "未提供token"),
+    TOKEN_INVALID(2006, "token无效"),
+    TOKEN_EXPIRED(2007, "token已过期"),
+    TOKEN_BE_REPLACED(2008, "token已被顶下线"),
+    TOKEN_KICK_OUT(2009, "token已被踢下线"),
     INCONSISTENT_PASSWORD(2010, "两次密码输入不一致"),
 
     /* 业务错误 */
@@ -41,6 +41,8 @@ public enum ResultCode implements BaseErrorInfoInterface {
 
     FILE_NOT_FOUND(4006, "文件空指针异常"),
     FILE_FORMAT_ERROR(4007, "文件格式错误"),
+
+    TEACHER_NOT_FOUND(4008,"教师未找到"),
 
     /* 系统错误 */
     UNKNOWN_ERROR(5000, "接口未知异常，请稍后再试"),

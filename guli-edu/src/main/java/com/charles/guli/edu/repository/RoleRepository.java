@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     @Query("select new com.charles.guli.edu.domain.dto.RoleDto(r.id, r.roleName, r.roleCode, r.sort,r.status, r.createdTime) " +
@@ -17,4 +19,7 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
             "(:#{#roleQuery.begin} is null or r.createdTime >:#{#roleQuery.begin}) and " +
             "(:#{#roleQuery.end} is null or r.createdTime <:#{#roleQuery.end})")
     Page<RoleDto> findCustom(RoleQuery roleQuery, Pageable pageable);
+
+    @Query("select r.roleCode from Role r where r.id in ?1")
+    List<String> findRoleCodes(List<Integer> roleIds);
 }

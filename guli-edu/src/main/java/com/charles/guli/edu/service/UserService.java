@@ -46,6 +46,7 @@ public class UserService {
         if (user == null || !StringUtils.pathEquals(loginParam.getPassword(), user.getPassword()))
             throw new BizException(ResultCode.USER_CREDENTIALS_ERROR);
         StpUtil.login(user.getId());
+        StpUtil.getSession().set("loginUser", user.getUsername());
         return StpUtil.getTokenValue();
     }
 
