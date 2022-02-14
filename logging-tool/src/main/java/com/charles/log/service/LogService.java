@@ -7,6 +7,7 @@ import com.charles.log.domain.Log;
 import com.charles.log.repository.LogRepository;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.scheduling.annotation.Async;
@@ -20,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LogService {
@@ -27,8 +29,9 @@ public class LogService {
     private final LogRepository logRepository;
 
     @Async
-    public void save(HttpServletRequest request,String username, ProceedingJoinPoint joinPoint, Log log) {
-        if (log == null) throw new BizException("Log不能为null!");
+    public void save(HttpServletRequest request,String username, ProceedingJoinPoint joinPoint, Log logg) {
+        log.info("log service save()");
+        if (logg == null) throw new BizException("Log不能为null!");
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         com.charles.log.annotation.Log aopLog =
@@ -40,13 +43,13 @@ public class LogService {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
 
         // 描述
-        log.setDescription(aopLog.value());
-        log.setRequestIp(IpUtils.getIpAddr(request));
-        log.setMethod(methodName);
-        log.setUsername(username);
-        log.setParams(getParameter(method, joinPoint.getArgs()));
-        log.setBrowser(userAgent.getBrowser().toString());
-        logRepository.save(log);
+        logg.setDescription(aopLog.value());
+        logg.setRequestIp(IpUtils.getIpAddr(request));
+        logg.setMethod(methodName);
+        logg.setUsername(username);
+        logg.setParams(getParameter(method, joinPoint.getArgs()));
+        logg.setBrowser(userAgent.getBrowser().toString());
+        logRepository.save(logg);
     }
 
     /**

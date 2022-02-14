@@ -1,7 +1,6 @@
 package com.charles.guli.edu.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
@@ -19,12 +18,8 @@ import java.util.Map;
 @Slf4j
 public class CustomErrorController extends BasicErrorController {
 
-    @Autowired
-    public CustomErrorController(ErrorAttributes errorAttributes,
-                                 ServerProperties errorProperties,
-                                 List<ErrorViewResolver> errorViewResolvers) {
-
-        super(errorAttributes, errorProperties.getError(), errorViewResolvers);
+    public CustomErrorController(ErrorAttributes errorAttributes, ServerProperties serverProperties, List<ErrorViewResolver> errorViewResolvers) {
+        super(errorAttributes, serverProperties.getError(), errorViewResolvers);
     }
 
     @Override

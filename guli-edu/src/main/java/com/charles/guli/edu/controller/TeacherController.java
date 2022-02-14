@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class TeacherController {
     @ApiOperation("条件查询所有教师列表（分页）")
     @PostMapping("/{pageNum}/{pageSize}")
     public R<PageBean<Teacher>> findByCondition(@PathVariable Integer pageNum,
-                             @PathVariable Integer pageSize,
-                             @RequestBody(required = false) TeacherQuery teacherQuery) {
+                                                @PathVariable Integer pageSize,
+                                                @RequestBody(required = false) TeacherQuery teacherQuery) {
         PageBean<Teacher> teachers = teacherQuery == null ?
                 teacherService.findPage(pageNum, pageSize) :
                 teacherService.findByCondition(pageNum, pageSize, teacherQuery);
@@ -50,19 +51,20 @@ public class TeacherController {
 
     @ApiOperation("添加教师")
     @PostMapping
-    public R<Teacher> addTeacher(@RequestBody Teacher teacher) {
+    public R<Teacher> addTeacher(@RequestBody Teacher teacher, HttpServletRequest request) {
+
         Teacher result = teacherService.add(teacher);
         return R.ok(result);
     }
 
-    @ApiOperation( "根据id查询教师")
+    @ApiOperation("根据id查询教师")
     @GetMapping("/{id}")
     public R<Teacher> findOne(@PathVariable Integer id) {
         Teacher teacher = teacherService.findById(id);
         return R.ok(teacher);
     }
 
-    @ApiOperation( "根据id更新教师")
+    @ApiOperation("根据id更新教师")
     @PutMapping("/{id}")
     public R<Teacher> update(@PathVariable Integer id, @RequestBody Teacher teacher) {
         teacher.setId(id);
@@ -70,17 +72,17 @@ public class TeacherController {
         return R.ok(result);
     }
 
-    @ApiOperation( "根据id删除教师")
+    @ApiOperation("根据id删除教师")
     @DeleteMapping("/{id}")
     public R<Void> remove(@PathVariable Integer id) {
         teacherService.remove(id);
         return R.ok();
     }
 
-    @ApiOperation( "上传教师头像")
+    @ApiOperation("上传教师头像")
     @PostMapping("/upload/avatar")
-    public R<Dict> uploadAvatar(MultipartFile avatar) throws IOException {
+    public R<Dict> uploadAvatar(@RequestParam MultipartFile avatar) throws IOException {
         String url = teacherService.uploadAvatar(avatar);
-        return R.ok(Dict.create().set("url",url));
+        return R.ok(Dict.create().set("url", url));
     }
 }

@@ -9,12 +9,16 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Set;
 
 @RestControllerAdvice
 @Slf4j
@@ -26,7 +30,8 @@ public class GlobeExceptionHandler {
         return R.fail(e.getErrorCode(), e.getErrorMsg());
     }
 
-    @ExceptionHandler({BindException.class,
+    @ExceptionHandler({
+            BindException.class,
             ConstraintViolationException.class,
             MethodArgumentNotValidException.class})
     public R<Void> handleParamValidateException(Exception e) {
@@ -39,10 +44,17 @@ public class GlobeExceptionHandler {
             log.error("发送参数验证异常！原因是：{}", fieldError.getDefaultMessage());
             return R.fail(ResultCode.PARAM_NOT_VALID.getCode(), fieldError.getDefaultMessage());
         } else if (e instanceof ConstraintViolationException) {
-            log.error("发送参数验证异常！原因是：{}", e.getMessage().split(": ")[1]);
-            return R.fail(ResultCode.PARAM_NOT_VALID.getCode(), e.getMessage().split(": ")[1]);
+            ConstraintViolationException constraintViolationException =
+                    (ConstraintViolationException) e;
+            Set<ConstraintViolation<?>> violations =
+                    constraintViolationException.getConstraintViolations();
+            ConstraintViolation<?> next = violations.iterator().next();
+            String message = next.getMessage();
+            log.error("发送参数验证异常！原因是：{}", message);
+            return R.fail(ResultCode.PARAM_NOT_VALID.getCode(), message);
         } else {
             FieldError fieldError = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError();
+            assert fieldError != null;
             log.error("发送参数验证异常！原因是：{}", fieldError.getDefaultMessage());
             return R.fail(ResultCode.PARAM_NOT_VALID.getCode(), fieldError.getDefaultMessage());
         }
@@ -59,15 +71,21 @@ public class GlobeExceptionHandler {
     @ExceptionHandler({
             HttpMediaTypeNotSupportedException.class,
             HttpMessageNotReadableException.class,
-            MethodArgumentTypeMismatchException.class
+            MethodArgumentTypeMismatchException.class,
+            MissingServletRequestParameterException.class,
+            MissingServletRequestPartException.class
     })
     private R<Void> paramExceptionHandler(Exception e) {
         if (e instanceof HttpMediaTypeNotSupportedException) {
             return R.fail(ResultCode.PARAM_TYPE_ERROR);
         } else if (e instanceof MethodArgumentTypeMismatchException) {
             return R.fail(ResultCode.PARAM_NOT_VALID);
+        } else if (e instanceof MissingServletRequestParameterException) {
+            return R.fail(ResultCode.PARAM_IS_BLANK);
+        } else if (e instanceof MissingServletRequestPartException) {
+            return R.fail(ResultCode.FILE_NOT_FOUND);
         } else {
-            return R.fail(ResultCode.PARAM_NOT_COMPLETE);
+            return R.fail(ResultCode.PARAM_TYPE_ERROR);
         }
     }
 }

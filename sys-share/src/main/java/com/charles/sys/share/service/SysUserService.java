@@ -1,10 +1,11 @@
 package com.charles.sys.share.service;
 
-import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.core.collection.ListUtil;
 import com.charles.common.domain.ResultCode;
 import com.charles.common.execption.BizException;
+import com.charles.common.utils.IpUtils;
 import com.charles.sys.share.domain.dto.LoginParam;
 import com.charles.sys.share.domain.dto.LoginResult;
 import com.charles.sys.share.domain.dto.UserParam;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -28,12 +30,13 @@ public class SysUserService {
     private final DeptRepository deptRepository;
 
     public LoginResult login(LoginParam loginParam, HttpServletRequest request) {
-        SysUser loginUser =
-                sysUserRepository.findByUsernameAndPassword(loginParam.getUsername(), SaSecureUtil.md5(loginParam.getPassword()));
+        SysUser loginUser = sysUserRepository.findByUsername(loginParam.getUsername());
         if (loginUser == null) throw new BizException(ResultCode.USER_CREDENTIALS_ERROR);
+        if (!BCrypt.checkpw(loginParam.getPassword(), loginUser.getPassword()))
+            throw new BizException(ResultCode.USER_CREDENTIALS_ERROR);
         StpUtil.login(loginUser.getId());
         loginUser.setLastLogin(new Date());
-        loginUser.setIp(ServletUtil.getClientIP(request));
+        loginUser.setIp(IpUtils.getIpAddr(request));
 
         LoginResult loginResult = new LoginResult();
         loginResult.setTokenHead(StpUtil.getTokenName());
@@ -50,9 +53,9 @@ public class SysUserService {
 
     public void add(UserParam userParam) {
         SysUser user = sysUserRepository.findByUsername(userParam.getUsername());
-        if (user != null) throw new BizException(ResultCode.USER_ACCOUNT_ALREADY_EXIST);
+        if (user != null) throw new BizException(ResultCode.PARAM_TYPE_ERROR);
         user = new SysUser();
-        String newPassword = SaSecureUtil.md5(userParam.getPassword());
+        String newPassword = BCrypt.hashpw(userParam.getPassword());
         BeanUtils.copyProperties(userParam, user);
         user.setPassword(newPassword);
 

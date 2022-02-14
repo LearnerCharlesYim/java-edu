@@ -10,6 +10,8 @@ public enum ResultCode implements BaseErrorInfoInterface {
     /* 默认失败 */
     COMMON_FAIL(-1, "操作失败"),
 
+    NOT_FOUND(404,"Not Found"),
+
     /* 参数错误：1000～1999 */
     PARAM_NOT_VALID(1001, "参数无效"),
     PARAM_IS_BLANK(1002, "参数为空"),

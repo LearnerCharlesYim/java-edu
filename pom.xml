@@ -33,14 +33,14 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot-starter</artifactId>
-                <version>1.28.0</version>
+                <version>1.29.0</version>
             </dependency>
 
             <!-- Sa-Token 整合 Redis （使用jackson序列化方式） -->
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-dao-redis-jackson</artifactId>
-                <version>1.28.0</version>
+                <version>1.29.0</version>
             </dependency>
 
             <dependency>
@@ -71,6 +71,18 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>2.0.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.owasp.antisamy</groupId>
+                <artifactId>antisamy</artifactId>
+                <version>1.5.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.5</version>
             </dependency>
 
         </dependencies>

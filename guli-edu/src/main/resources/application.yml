@@ -22,13 +22,20 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
     default-property-inclusion: non_empty
-
+    parser:
+      allow-unquoted-control-chars: true
   servlet:
     multipart:
       max-file-size: 5MB
       max-request-size: 50MB
 
-
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      key-id: LTAI5tKMbYzFdowxo7HyXd3Z
+      key-secret: X7QEpjBZoSoSXxqbOijp9Tj1K7T6jl
+      bucket-name: guli-edu-test-bucket
 
 # Sa-Token 配置
 sa-token:
@@ -46,6 +53,8 @@ sa-token:
   # 是否输出操作日志
   is-log: false
   is-read-cookie: false
+
+
 
 
 

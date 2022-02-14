@@ -22,4 +22,6 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     @Query("select r.roleCode from Role r where r.id in ?1")
     List<String> findRoleCodes(List<Integer> roleIds);
+
+    Role findByRoleCode(String roleCode);
 }

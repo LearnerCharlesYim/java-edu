@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -117,5 +118,12 @@ public class RoleService {
     public List<String> findCurrentRoles() {
         List<Integer> roleIds = userRoleRepository.findRoleIdsByUserId(StpUtil.getLoginIdAsInt());
         return roleRepository.findRoleCodes(roleIds);
+    }
+
+    public List<String> findRoleMenus(String roleCode) {
+        Role role = roleRepository.findByRoleCode(roleCode);
+        List<Integer> MenuIds = roleMenuRepository.findCustomMenuIds(role.getId());
+        List<Menu> menus = menuRepository.findAllById(MenuIds);
+        return menus.stream().map(Menu::getPath).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

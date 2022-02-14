@@ -91,6 +91,10 @@ public class R<T> {
         return r;
     }
 
+    public static R<Void> fail(String message) {
+        return fail(ResultCode.COMMON_FAIL.getCode(), message);
+    }
+
     public R<T> data(T data) {
         this.setData(data);
         return this;

@@ -36,7 +36,7 @@ public class TeacherService {
 
     public PageBean<Teacher> findByCondition(Integer pageNum, Integer pageSize, TeacherQuery teacherQuery) {
         Page<Teacher> page = teacherRepository.findCustom(teacherQuery, PageRequest.of(pageNum - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdTime")));
-        return parsePage(pageNum, page);
+        return PageBean.restPage(page);
     }
 
     private <T> PageBean<T> parsePage(Integer pageNum, Page<T> page) {
