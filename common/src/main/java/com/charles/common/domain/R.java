@@ -1,6 +1,7 @@
 package com.charles.common.domain;
 
 import com.charles.common.execption.BaseErrorInfoInterface;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @SuppressWarnings({"unchecked", "all"})
 public class R<T> {
@@ -8,6 +9,7 @@ public class R<T> {
     private Boolean success;
     private Integer code;
     private String message;
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private T data;
 
     public R() {

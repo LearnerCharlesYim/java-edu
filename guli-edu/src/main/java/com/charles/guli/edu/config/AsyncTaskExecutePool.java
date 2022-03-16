@@ -17,7 +17,6 @@ public class AsyncTaskExecutePool {
     @Bean
     @Primary
     public ThreadPoolTaskExecutor asyncServiceExecutor() {
-        log.info("start asyncServiceExecutor");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // 通过Runtime方法来获取当前服务器cpu内核，根据cpu内核来创建核心线程数和最大线程数
         int availableProcessors = Runtime.getRuntime().availableProcessors();

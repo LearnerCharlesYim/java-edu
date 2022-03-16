@@ -4,6 +4,7 @@ import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
+import com.charles.common.interceptor.ResponseResultIntercept;
 import com.charles.guli.edu.domain.pojo.Menu;
 import com.charles.guli.edu.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -21,29 +23,33 @@ import java.util.List;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final MenuRepository menuRepository;
-    private List<Menu> menus;
+    private List<Menu> menus = new ArrayList<>();
 
     // 注册拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaRouteInterceptor((request, response, handler) -> {
-                    log.info("------------------进入SaToken拦截器------------------");
+                    // 静态资源放行
                     if (!(handler instanceof HandlerMethod)) return;
+                    log.info("------------------进入SaToken拦截器------------------");
 
                     SaRouter.match("/**", r -> StpUtil.checkLogin());
-                    if (this.menus == null) {
-                        this.menus = menuRepository.findByType(Menu.Type.BUTTON);
+                    if (menus.isEmpty()) {
+                        menus = menuRepository.findByType(Menu.Type.BUTTON);
                     }
-                    this.menus.forEach(menu -> {
+                    menus.forEach(menu -> {
+                        // 请求路径
                         String path = menu.getPath();
-                        if (menu.getMethod() != null) {
-                            if ("GET".equals(menu.getMethod())) {
+                        // 请求方法
+                        String method = menu.getMethod();
+                        if (method != null) {
+                            if ("GET".equalsIgnoreCase(method)) {
                                 SaRouter.match(SaHttpMethod.GET).match(path).check(r -> StpUtil.checkPermission(path));
-                            } else if ("POST".equals(menu.getMethod())) {
+                            } else if ("POST".equalsIgnoreCase(method)) {
                                 SaRouter.match(SaHttpMethod.POST).match(path).check(r -> StpUtil.checkPermission(path));
-                            } else if ("PUT".equals(menu.getMethod())) {
+                            } else if ("PUT".equalsIgnoreCase(method)) {
                                 SaRouter.match(SaHttpMethod.PUT).match(path).check(r -> StpUtil.checkPermission(path));
-                            } else if ("DELETE".equals(menu.getMethod())) {
+                            } else if ("DELETE".equalsIgnoreCase(method)) {
                                 SaRouter.match(SaHttpMethod.DELETE).match(path).check(r -> StpUtil.checkPermission(path));
                             } else {
                                 SaRouter.match(path, r -> StpUtil.checkPermission(path));
@@ -66,5 +72,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/error",
                         "/online"
                 );
+
+        registry.addInterceptor(new ResponseResultIntercept()).addPathPatterns("/**");
     }
 }

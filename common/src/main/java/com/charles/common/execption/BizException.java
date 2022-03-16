@@ -4,6 +4,7 @@ package com.charles.common.execption;
 public class BizException extends RuntimeException {
     protected Integer errorCode;
     protected String errorMsg;
+    protected BaseErrorInfoInterface errorInfo;
 
     public BizException() {
         super();
@@ -11,12 +12,14 @@ public class BizException extends RuntimeException {
 
     public BizException(BaseErrorInfoInterface errorInfo) {
         super(errorInfo.getMessage());
+        this.errorInfo = errorInfo;
         this.errorCode = errorInfo.getCode();
         this.errorMsg = errorInfo.getMessage();
     }
 
     public BizException(BaseErrorInfoInterface errorInfo, Throwable cause) {
         super(errorInfo.getMessage(), cause);
+        this.errorInfo = errorInfo;
         this.errorCode = errorInfo.getCode();
         this.errorMsg = errorInfo.getMessage();
     }
@@ -48,4 +51,11 @@ public class BizException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
+    public BaseErrorInfoInterface getErrorInfo() {
+        return errorInfo;
+    }
+
+    public void setErrorInfo(BaseErrorInfoInterface errorInfo) {
+        this.errorInfo = errorInfo;
+    }
 }

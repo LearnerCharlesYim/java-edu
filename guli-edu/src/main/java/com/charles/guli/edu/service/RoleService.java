@@ -126,4 +126,8 @@ public class RoleService {
         List<Menu> menus = menuRepository.findAllById(MenuIds);
         return menus.stream().map(Menu::getPath).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
+
+    public List<Role> queryRoles() {
+        return roleRepository.findAll();
+    }
 }

@@ -1,9 +1,9 @@
 package com.charles.common.filter;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.HtmlUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -63,8 +63,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public ServletInputStream getInputStream() throws IOException {
         if (!isJsonRequest()) return super.getInputStream();
-        String json = IOUtils.toString(super.getInputStream(), "utf-8");
-        if (StringUtils.isEmpty(json)) return super.getInputStream();
+        String json = IoUtil.readUtf8(super.getInputStream());
         json = xssClean(json);
         byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
         final ByteArrayInputStream bis = new ByteArrayInputStream(jsonBytes);

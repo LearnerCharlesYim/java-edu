@@ -8,6 +8,9 @@
         <module>common</module>
         <module>sys-share</module>
         <module>logging-tool</module>
+        <module>sys-health</module>
+        <module>sys-chat</module>
+        <module>sys-chat-io</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -24,11 +27,34 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-plugin.version>3.8.0</maven-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.charles</groupId>
+                <artifactId>guli-edu</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.charles</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.charles</groupId>
+                <artifactId>logging-tool</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.charles</groupId>
+                <artifactId>sys-share</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
             <dependency>
                 <groupId>cn.dev33</groupId>
@@ -83,6 +109,12 @@
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>1.21</version>
             </dependency>
 
         </dependencies>

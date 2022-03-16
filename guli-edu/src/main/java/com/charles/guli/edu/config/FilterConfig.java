@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     /**
-     * 配置跨站攻击过滤器
+     * 配置XSS跨站攻击过滤器
      */
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {

@@ -2,7 +2,7 @@ package com.charles.common.domain;
 
 import com.charles.common.execption.BaseErrorInfoInterface;
 
-
+@SuppressWarnings("all")
 public enum ResultCode implements BaseErrorInfoInterface {
     /* 成功 */
     SUCCESS(200, "操作成功"),
@@ -10,7 +10,7 @@ public enum ResultCode implements BaseErrorInfoInterface {
     /* 默认失败 */
     COMMON_FAIL(-1, "操作失败"),
 
-    NOT_FOUND(404,"Not Found"),
+    NOT_FOUND(404, "Not Found"),
 
     /* 参数错误：1000～1999 */
     PARAM_NOT_VALID(1001, "参数无效"),
@@ -39,12 +39,11 @@ public enum ResultCode implements BaseErrorInfoInterface {
 
     GRAPH_CAPTCHA_EXPIRED(4003, "图形验证码过期"),
     GRAPH_CAPTCHA_ERROR(4004, "图形验证码错误"),
-    BOARD_NOT_FOUND(4005, "板块未找到"),
 
     FILE_NOT_FOUND(4006, "文件空指针异常"),
     FILE_FORMAT_ERROR(4007, "文件格式错误"),
 
-    TEACHER_NOT_FOUND(4008,"教师未找到"),
+    TEACHER_NOT_FOUND(4008, "教师未找到"),
 
     /* 系统错误 */
     UNKNOWN_ERROR(5000, "接口未知异常，请稍后再试"),

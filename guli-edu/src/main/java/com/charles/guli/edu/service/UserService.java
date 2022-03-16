@@ -2,6 +2,7 @@ package com.charles.guli.edu.service;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.charles.common.domain.ResultCode;
+import com.charles.common.execption.BizAssert;
 import com.charles.common.execption.BizException;
 import com.charles.guli.edu.domain.pojo.User;
 import com.charles.guli.edu.domain.pojo.UserRole;
@@ -23,7 +24,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
-
     public void addUser(UserVo userParam) {
         User user = new User();
         BeanUtils.copyProperties(userParam, user);
@@ -43,8 +43,8 @@ public class UserService {
 
     public String login(LoginParam loginParam) {
         User user = userRepository.findByUsername(loginParam.getUsername());
-        if (user == null || !StringUtils.pathEquals(loginParam.getPassword(), user.getPassword()))
-            throw new BizException(ResultCode.USER_CREDENTIALS_ERROR);
+        BizAssert.notNull(user, ResultCode.USER_CREDENTIALS_ERROR);
+        BizAssert.equals(loginParam.getPassword(), user.getPassword(), ResultCode.USER_CREDENTIALS_ERROR);
         StpUtil.login(user.getId());
         StpUtil.getSession().set("loginUser", user.getUsername());
         return StpUtil.getTokenValue();

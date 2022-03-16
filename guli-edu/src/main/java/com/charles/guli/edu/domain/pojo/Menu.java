@@ -1,6 +1,5 @@
 package com.charles.guli.edu.domain.pojo;
 
-import com.charles.common.domain.CustomTree;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.SQLDelete;

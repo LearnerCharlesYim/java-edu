@@ -19,7 +19,7 @@ public class PageBean<T> {
     public static <T> PageBean<T> restPage(Page<T> pageInfo) {
         PageBean<T> result = new PageBean<>();
         result.setPages(pageInfo.getTotalPages());
-        result.setCurrentPage(pageInfo.getNumber());
+        result.setCurrentPage(pageInfo.getNumber() + 1);
         result.setTotal((int) pageInfo.getTotalElements());
         result.setContent(pageInfo.getContent());
         return result;

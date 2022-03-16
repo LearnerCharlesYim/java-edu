@@ -24,10 +24,16 @@ import java.util.Set;
 @Slf4j
 public class GlobeExceptionHandler {
 
+    @ExceptionHandler(RuntimeException.class)
+    private R<Void> runtimeExceptionHandler(RuntimeException e) {
+        e.printStackTrace();
+        return R.fail(e.getMessage());
+    }
+
     @ExceptionHandler(BizException.class)
     private R<Void> bizExceptionHandler(BizException e) {
         log.error("发送业务异常！原因是：{}", e.getErrorMsg());
-        return R.fail(e.getErrorCode(), e.getErrorMsg());
+        return R.fail(e.getErrorInfo());
     }
 
     @ExceptionHandler({
