@@ -7,8 +7,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class R<T> {
 
     private Boolean success;
+
     private Integer code;
+
     private String message;
+
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private T data;
 

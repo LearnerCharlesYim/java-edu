@@ -17,9 +17,15 @@ public enum ResultCode implements BaseErrorInfoInterface {
     PARAM_IS_BLANK(1002, "参数为空"),
     PARAM_TYPE_ERROR(1003, "参数类型错误"),
     PARAM_NOT_COMPLETE(1004, "参数缺失"),
+    PARAM_VALIDATE_FAIL(1005,"参数校验失败"),
+
+    REQUEST_MEDIA_TYPE_FAIL(1007, "请求媒体类型错误"),
+    RESPONSE_CONVERT_FALI(1006, "响应数据序列化错误"),
+    RESPONSE_MEDIA_TYPE_FAIL(1007, "响应媒体类型错误"),
+    REQUEST_METHOD_NOT_SUPPORTED(1008, "请求方法不支持"),
 
     /* 用户错误 */
-    USER_NOT_LOGIN(2001, "用户未登录"),
+    USER_NOT_LOGIN(2001, "账号未登录"),
     USER_ACCOUNT_EXPIRED(2002, "账号已过期"),
     USER_CREDENTIALS_ERROR(2003, "账号或密码错误"),
     USER_CREDENTIALS_EXPIRED(2004, "密码过期"),
@@ -29,10 +35,9 @@ public enum ResultCode implements BaseErrorInfoInterface {
     TOKEN_BE_REPLACED(2008, "token已被顶下线"),
     TOKEN_KICK_OUT(2009, "token已被踢下线"),
     INCONSISTENT_PASSWORD(2010, "两次密码输入不一致"),
+    NO_PERMISSION(2011, "暂无操作权限"),
 
     /* 业务错误 */
-    NO_PERMISSION(3001, "没有操作权限"),
-
     EMAIL_EXPIRED(4001, "邮箱验证码过期"),
     EMAIL_ERROR(4002, "邮箱验证码错误"),
     EMAIL_SEND_ERROR(4003, "邮箱远程连接失败，请稍后再试"),
@@ -43,7 +48,7 @@ public enum ResultCode implements BaseErrorInfoInterface {
     FILE_NOT_FOUND(4006, "文件空指针异常"),
     FILE_FORMAT_ERROR(4007, "文件格式错误"),
 
-    TEACHER_NOT_FOUND(4008, "教师未找到"),
+    TEACHER_NOT_FOUND(4008, "教师信息未找到"),
 
     /* 系统错误 */
     UNKNOWN_ERROR(5000, "接口未知异常，请稍后再试"),

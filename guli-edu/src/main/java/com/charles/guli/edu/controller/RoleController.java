@@ -52,7 +52,8 @@ public class RoleController {
     @ApiOperation("角色修改")
     @PutMapping("{id}")
     @Log("角色修改")
-    public R<Void> updateRole(@PathVariable Integer id, @Validated @RequestBody RoleVo roleVo) {
+    public R<Void> updateRole(@PathVariable Integer id,
+                              @Validated @RequestBody RoleVo roleVo) {
         roleService.updateRole(id, roleVo);
         return R.ok();
     }

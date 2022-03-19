@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginParam {
 
-    @NotBlank
+    @NotBlank(message = "用户名不为空")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "密码不为空")
     private String password;
 }

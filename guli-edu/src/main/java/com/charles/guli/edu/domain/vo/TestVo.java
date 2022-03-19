@@ -16,7 +16,7 @@ public class TestVo {
     private String name;
 
 
-    public static enum Gender implements NameValueEnum<Integer> {
+    public enum Gender implements NameValueEnum<Integer> {
         MAN(1, "男"),
         WOMAN(2, "女");
 

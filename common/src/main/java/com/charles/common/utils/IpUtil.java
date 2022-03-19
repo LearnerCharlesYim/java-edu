@@ -7,7 +7,7 @@ import java.io.LineNumberReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class IpUtils {
+public class IpUtil {
     public static final String UN_KNOWN = "unknown";
     public static final String LOCAL = "127.0.0.1";
     public static final String LOCAL_STR = "0:0:0:0:0:0:0:1";

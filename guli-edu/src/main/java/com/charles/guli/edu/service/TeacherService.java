@@ -3,7 +3,7 @@ package com.charles.guli.edu.service;
 import com.charles.common.domain.PageBean;
 import com.charles.common.domain.ResultCode;
 import com.charles.common.execption.BizException;
-import com.charles.common.utils.PropertyUtils;
+import com.charles.common.utils.PropertyUtil;
 import com.charles.guli.edu.domain.pojo.Teacher;
 import com.charles.guli.edu.domain.vo.TeacherQuery;
 import com.charles.guli.edu.repository.TeacherRepository;
@@ -60,7 +60,7 @@ public class TeacherService {
 
     public Teacher update(Teacher teacher) {
         Teacher target = teacherRepository.findById(teacher.getId()).get();
-        PropertyUtils.copyNotNullProperty(teacher, target);
+        PropertyUtil.copyNotNullProperty(teacher, target);
         return teacherRepository.save(target);
     }
 

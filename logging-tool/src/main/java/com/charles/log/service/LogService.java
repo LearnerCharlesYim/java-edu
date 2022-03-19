@@ -1,8 +1,8 @@
 package com.charles.log.service;
 
 import cn.hutool.json.JSONUtil;
-import com.charles.common.execption.BizException;
-import com.charles.common.utils.IpUtils;
+import com.charles.common.execption.BizAssert;
+import com.charles.common.utils.IpUtil;
 import com.charles.log.domain.Log;
 import com.charles.log.repository.LogRepository;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -29,9 +29,9 @@ public class LogService {
     private final LogRepository logRepository;
 
     @Async
-    public void save(HttpServletRequest request,String username, ProceedingJoinPoint joinPoint, Log logg) {
+    public void save(HttpServletRequest request, String username, ProceedingJoinPoint joinPoint, Log logg) {
         log.info("log service save()");
-        if (logg == null) throw new BizException("Log不能为null!");
+        BizAssert.notNull(logg, "Log不能为null!");
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         com.charles.log.annotation.Log aopLog =
@@ -44,7 +44,7 @@ public class LogService {
 
         // 描述
         logg.setDescription(aopLog.value());
-        logg.setRequestIp(IpUtils.getIpAddr(request));
+        logg.setRequestIp(IpUtil.getIpAddr(request));
         logg.setMethod(methodName);
         logg.setUsername(username);
         logg.setParams(getParameter(method, joinPoint.getArgs()));

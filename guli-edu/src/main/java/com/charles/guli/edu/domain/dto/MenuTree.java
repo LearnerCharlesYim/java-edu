@@ -1,12 +1,13 @@
 package com.charles.guli.edu.domain.dto;
 
+import com.charles.common.utils.TreeUtil;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class MenuTree {
+public class MenuTree implements TreeUtil.TreeNode<MenuTree> {
 
     private Integer id;
 

@@ -2,10 +2,9 @@ package com.charles.sys.share.service;
 
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.collection.ListUtil;
 import com.charles.common.domain.ResultCode;
 import com.charles.common.execption.BizException;
-import com.charles.common.utils.IpUtils;
+import com.charles.common.utils.IpUtil;
 import com.charles.sys.share.domain.dto.LoginParam;
 import com.charles.sys.share.domain.dto.LoginResult;
 import com.charles.sys.share.domain.dto.UserParam;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class SysUserService {
             throw new BizException(ResultCode.USER_CREDENTIALS_ERROR);
         StpUtil.login(loginUser.getId());
         loginUser.setLastLogin(new Date());
-        loginUser.setIp(IpUtils.getIpAddr(request));
+        loginUser.setIp(IpUtil.getIpAddr(request));
 
         LoginResult loginResult = new LoginResult();
         loginResult.setTokenHead(StpUtil.getTokenName());

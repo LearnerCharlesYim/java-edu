@@ -1,6 +1,6 @@
 package com.charles.common.execption;
 
-
+@SuppressWarnings("all")
 public class BizException extends RuntimeException {
     protected Integer errorCode;
     protected String errorMsg;
@@ -22,6 +22,11 @@ public class BizException extends RuntimeException {
         this.errorInfo = errorInfo;
         this.errorCode = errorInfo.getCode();
         this.errorMsg = errorInfo.getMessage();
+    }
+
+    public BizException(String errorMsg, Throwable cause) {
+        super(errorMsg, cause);
+        this.errorMsg = errorMsg;
     }
 
     public BizException(String errorMsg) {

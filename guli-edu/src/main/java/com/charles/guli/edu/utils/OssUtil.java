@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
-import com.charles.common.utils.DownLoadUtils;
+import com.charles.common.utils.DownLoadUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +49,7 @@ public class OssUtil {
 
         response.setContentType(ossObject.getObjectMetadata().getContentType());
 
-        String newFilename = DownLoadUtils.getFileName(request.getHeader("user-agent"), filename);
+        String newFilename = DownLoadUtil.getFileName(request.getHeader("user-agent"), filename);
         response.setHeader("Content-Disposition", "attachment;filename=" + newFilename);
 
         // 读取文件内容。

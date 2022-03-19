@@ -2,7 +2,7 @@ package com.charles.guli.edu.service;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.charles.common.domain.PageBean;
-import com.charles.common.utils.PropertyUtils;
+import com.charles.common.utils.PropertyUtil;
 import com.charles.guli.edu.domain.dto.RoleDto;
 import com.charles.guli.edu.domain.dto.RoleInfo;
 import com.charles.guli.edu.domain.pojo.Menu;
@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -57,7 +56,7 @@ public class RoleService {
 
     public void updateRole(Integer id, RoleVo roleVo) {
         Role role = roleRepository.findById(id).get();
-        PropertyUtils.copyNotNullProperty(roleVo, role);
+        PropertyUtil.copyNotNullProperty(roleVo, role);
         roleRepository.save(role);
         List<Integer> menuIds = roleVo.getMenuIds();
         if (menuIds != null) setRoleMenu(role.getId(), menuIds);

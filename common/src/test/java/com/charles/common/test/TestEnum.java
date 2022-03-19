@@ -1,7 +1,6 @@
 package com.charles.common.test;
 
-import com.charles.common.domain.ResultCode;
-import com.charles.common.utils.enums.EnumUtils;
+import com.charles.common.utils.enums.EnumUtil;
 import com.charles.common.utils.enums.NameValueEnum;
 import org.junit.Test;
 
@@ -35,24 +34,24 @@ public class TestEnum {
 
     @Test
     public void test01() {
-        Gender gender = EnumUtils.getEnumByValue(Gender.class, 2);
+        Gender gender = EnumUtil.getEnumByValue(Gender.class, 2);
         System.out.println(gender);
 
-        Gender gender1 = EnumUtils.getEnumByValue(new Gender[]{Gender.MAM, Gender.FEMAIL}, 1);
+        Gender gender1 = EnumUtil.getEnumByValue(new Gender[]{Gender.MAM, Gender.FEMAIL}, 1);
         System.out.println(gender1);
 
-        String name = EnumUtils.getNameByValue(new Gender[]{Gender.MAM, Gender.FEMAIL}, 2);
+        String name = EnumUtil.getNameByValue(new Gender[]{Gender.MAM, Gender.FEMAIL}, 2);
         System.out.println(name);
 
-        System.out.println(EnumUtils.getValueByName(new Gender[]{Gender.MAM, Gender.FEMAIL}, "女"));
+        System.out.println(EnumUtil.getValueByName(new Gender[]{Gender.MAM, Gender.FEMAIL}, "女"));
 
         System.out.println(Arrays.toString(Gender.class.getEnumConstants()));
     }
 
     @Test
     public void test02(){
-        System.out.println(EnumUtils.getNameByValue(Gender.class, 1));
-        System.out.println(EnumUtils.getValueByName(Gender.class, "女"));
-        System.out.println(EnumUtils.getEnumByValue(Gender.class, 1).getName());
+        System.out.println(EnumUtil.getNameByValue(Gender.class, 1));
+        System.out.println(EnumUtil.getValueByName(Gender.class, "女"));
+        System.out.println(EnumUtil.getEnumByValue(Gender.class, 1).getName());
     }
 }

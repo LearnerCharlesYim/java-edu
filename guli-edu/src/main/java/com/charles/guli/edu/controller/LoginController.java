@@ -8,6 +8,7 @@ import com.charles.guli.edu.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class LoginController {
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
-    public R<Dict> login(@RequestBody LoginParam loginParam) {
+    public R<Dict> login(@RequestBody @Validated LoginParam loginParam) {
         String token = userService.login(loginParam);
         return R.ok(Dict.create().set("token", token));
     }

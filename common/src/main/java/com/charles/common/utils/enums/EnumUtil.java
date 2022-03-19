@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
  * 枚举常用工具类。<br/>
  * 使用该枚举工具类需要指定的枚举实现{@link ValueEnum} OR {@link NameValueEnum}接口
  */
-public class EnumUtils {
+public class EnumUtil {
     /**
      * 判断枚举值是否存在于指定枚举数组中
      *
@@ -128,5 +128,4 @@ public class EnumUtils {
     public static <E extends Enum<? extends ValueEnum<V>>, V> E getEnumByValue(Class<E> enumClass, V value) {
         return getEnumByValue(enumClass.getEnumConstants(), value);
     }
-
 }

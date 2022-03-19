@@ -8,36 +8,35 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TreeUtil {
-
-    public static <T extends TreeNode> List<T> generateTree(List<T> list) {
+    public static <T extends TreeNode<T>> List<T> generateTree(List<T> list) {
         return list.stream()
                 .filter(item -> item.getParentId() == 0)
                 .peek(item -> item.setChildren(getChildren(item, list)))
                 .collect(Collectors.toList());
     }
 
-    public static <T extends TreeNode, K extends TreeNode> List<K> generateTree(List<T> list, Class<K> clazz) {
+    public static <T extends TreeNode<T>, K extends TreeNode<K>> List<K> generateTree(List<T> list, Class<K> clazz) {
         return list.stream()
                 .filter(item -> item.getParentId() == 0)
-                .map(function(list, clazz))
+                .map(func(list, clazz))
                 .collect(Collectors.toList());
     }
 
-    private static <T extends TreeNode> List<T> getChildren(TreeNode parent, List<T> list) {
+    private static <T extends TreeNode<T>> List<T> getChildren(TreeNode<T> parent, List<T> list) {
         return list.stream()
                 .filter(item -> Objects.equals(item.getParentId(), parent.getId()))
                 .peek(item -> item.setChildren(getChildren(item, list)))
                 .collect(Collectors.toList());
     }
 
-    private static <T extends TreeNode, K extends TreeNode> List<K> getChildren(TreeNode parent, List<T> list, Class<K> clazz) {
+    private static <T extends TreeNode<T>, K extends TreeNode<K>> List<K> getChildren(TreeNode<K> parent, List<T> list, Class<K> clazz) {
         return list.stream()
                 .filter(item -> Objects.equals(item.getParentId(), parent.getId()))
-                .map(function(list, clazz))
+                .map(func(list, clazz))
                 .collect(Collectors.toList());
     }
 
-    private static <T extends TreeNode, K extends TreeNode> Function<T, K> function(List<T> list, Class<K> clazz) {
+    private static <T extends TreeNode<T>, K extends TreeNode<K>> Function<T, K> func(List<T> list, Class<K> clazz) {
         return item -> {
             K result;
             try {
@@ -53,12 +52,9 @@ public class TreeUtil {
         };
     }
 
-    public interface TreeNode {
-
-        Long getId();
-
-        Long getParentId();
-
-        <T extends TreeNode> void setChildren(List<T> children);
+    public interface TreeNode<E> {
+        Integer getId();
+        Integer getParentId();
+        void setChildren(List<E> children);
     }
 }

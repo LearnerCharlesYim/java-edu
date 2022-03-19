@@ -5,13 +5,14 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Dict;
 import com.charles.common.annotation.ResponseResult;
 import com.charles.common.domain.R;
-import com.charles.common.utils.enums.EnumUtils;
+import com.charles.common.utils.enums.EnumUtil;
 import com.charles.guli.edu.domain.pojo.Role;
 import com.charles.guli.edu.domain.vo.TestVo;
 import com.charles.guli.edu.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,7 +26,7 @@ public class TestController {
     private RoleService roleService;
 
     @GetMapping("/test")
-    public R<Void> test(String a, String b, HttpServletRequest request) {
+    public R<Void> test(@RequestParam Integer a, String b, HttpServletRequest request) {
         request.getParameterMap();
         request.getParameterValues("a");
         return R.ok();
@@ -41,8 +42,8 @@ public class TestController {
     }
 
     @ResponseResult
-    @GetMapping("test/role")
-    public List<Role> queryRole() {
+    @GetMapping("test/role/{hah}")
+    public List<Role> queryRole(@PathVariable Integer hah) {
         return roleService.queryRoles();
     }
 
@@ -64,12 +65,12 @@ public class TestController {
     }
 
     @ResponseResult
-    @GetMapping("test/validate")
+    @PostMapping("test/validate")
     public Dict testValidate(@Validated TestVo testVo) {
         System.out.println(testVo);
         return Dict.create()
                 .set("name", testVo.getName())
-                .set("gender", EnumUtils.getNameByValue(TestVo.Gender.class, testVo.getGender()));
+                .set("gender", EnumUtil.getNameByValue(TestVo.Gender.class, testVo.getGender()));
     }
 
     @ResponseResult
@@ -78,6 +79,17 @@ public class TestController {
         System.out.println(testVo);
         return Dict.create()
                 .set("name", testVo.getName())
-                .set("gender", EnumUtils.getNameByValue(TestVo.Gender.class, testVo.getGender()));
+                .set("gender", EnumUtil.getNameByValue(TestVo.Gender.class, testVo.getGender()));
+    }
+
+    @ResponseResult
+    @PostMapping("/test/multi")
+    public void testMultipart(@RequestParam MultipartFile file) {
+        System.out.println(file);
+    }
+
+    @GetMapping(value = "/test/testpro", produces = "text/html")
+    public String testPro() {
+        return "<h1>hello spring!</h1>";
     }
 }

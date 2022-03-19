@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 
-public class DownLoadUtils {
+public class DownLoadUtil {
 
     public static String getFileName(String agent, String filename) {
 

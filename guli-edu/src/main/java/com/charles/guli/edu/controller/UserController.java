@@ -7,6 +7,7 @@ import com.charles.guli.edu.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserController {
 
     @PostMapping
     @ApiOperation("添加用户")
-    public R<Void> addUser(@RequestBody UserVo user) {
+    public R<Void> addUser(@RequestBody @Validated UserVo user) {
         userService.addUser(user);
         return R.ok();
     }

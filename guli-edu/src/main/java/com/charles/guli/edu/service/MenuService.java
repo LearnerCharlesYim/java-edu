@@ -1,13 +1,13 @@
 package com.charles.guli.edu.service;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.charles.common.utils.PropertyUtils;
+import com.charles.common.utils.PropertyUtil;
+import com.charles.common.utils.TreeUtil;
 import com.charles.guli.edu.domain.dto.MenuTree;
 import com.charles.guli.edu.domain.pojo.Menu;
 import com.charles.guli.edu.domain.vo.MenuVo;
 import com.charles.guli.edu.repository.MenuRepository;
 import com.charles.guli.edu.repository.RoleMenuRepository;
-import com.charles.guli.edu.repository.RoleRepository;
 import com.charles.guli.edu.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -71,7 +71,7 @@ public class MenuService {
 
     public void update(Integer id, MenuVo menuVo) {
         Menu menu = menuRepository.findById(id).get();
-        PropertyUtils.copyNotNullProperty(menuVo, menu);
+        PropertyUtil.copyNotNullProperty(menuVo, menu);
         menuRepository.save(menu);
     }
 
@@ -90,5 +90,20 @@ public class MenuService {
 
     public List<String> findAllPaths() {
         return menuRepository.findAllPaths();
+    }
+
+    public List<MenuTree> tree() {
+        List<Menu> menus = menuRepository.findByStatus(true, Sort.by(Sort.Direction.ASC, "sort"));
+        List<MenuTree> treeList = menus.stream().map(menu -> {
+            MenuTree tree = new MenuTree();
+            BeanUtils.copyProperties(menu, tree);
+            return tree;
+        }).collect(Collectors.toList());
+        return TreeUtil.generateTree(treeList);
+    }
+
+    public List<MenuTree> tree2() {
+        List<Menu> menus = menuRepository.findByStatus(true, Sort.by(Sort.Direction.ASC, "sort"));
+        return TreeUtil.generateTree(menus, MenuTree.class);
     }
 }

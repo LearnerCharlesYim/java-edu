@@ -1,7 +1,7 @@
 package com.charles.common.validator;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.charles.common.utils.enums.EnumUtils;
+import com.charles.common.utils.enums.EnumUtil;
 import com.charles.common.utils.enums.NameValueEnum;
 import com.charles.common.utils.enums.ValueEnum;
 import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
@@ -82,7 +82,7 @@ public @interface EnumValue {
 
             // 如果没有限制枚举值，则直接强转判断即可
             if (ArrayUtil.isEmpty(values)) {
-                if (EnumUtils.isExist((ValueEnum[]) enumValue.value().getEnumConstants(), value)) {
+                if (EnumUtil.isExist((ValueEnum[]) enumValue.value().getEnumConstants(), value)) {
                     return true;
                 }
                 // 添加枚举值占位符值参数，校验失败的时候可用

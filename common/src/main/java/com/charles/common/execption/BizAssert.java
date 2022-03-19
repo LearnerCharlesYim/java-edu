@@ -13,6 +13,9 @@ import java.util.function.Supplier;
 public final class BizAssert {
     public static Integer defaultErrorCode = ResultCode.COMMON_FAIL.getCode();
 
+    BizAssert(){
+    }
+
     public static void setDefaultErrorCode(Integer errorCode) {
         defaultErrorCode = errorCode;
     }
