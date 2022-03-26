@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -25,6 +26,14 @@ public class testTree {
 
     @Test
     public void test02() throws Exception {
-        System.out.println(mapper.writeValueAsString(menuService.tree2()));
+//        System.out.println(mapper.writeValueAsString(menuService.tree2()));
+        System.out.println(mapper.writeValueAsString(menuService.tree3()));
+    }
+
+    @Test
+    public void testArray() {
+        Integer[] arr = {1, 2, 3, 4, 5};
+        Arrays.stream(arr).forEach(i -> i = i + 3);
+        System.out.println(Arrays.toString(arr));
     }
 }

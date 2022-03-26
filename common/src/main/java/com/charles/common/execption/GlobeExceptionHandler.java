@@ -13,7 +13,6 @@ import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -93,7 +92,7 @@ public class GlobeExceptionHandler {
     @ExceptionHandler(BizException.class)
     private R<Void> bizExceptionHandler(BizException e) {
         log.error("发送业务异常！原因是：{}", e.getErrorMsg());
-        return R.fail(e.getErrorInfo());
+        return R.fail(e.getErrorCode(), e.getErrorMsg());
     }
 
     /**

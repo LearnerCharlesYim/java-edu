@@ -32,6 +32,9 @@ spring:
     redis:
       repositories:
         enabled: false
+  mvc:
+    servlet:
+      load-on-startup: 1
 
 aliyun:
   oss:

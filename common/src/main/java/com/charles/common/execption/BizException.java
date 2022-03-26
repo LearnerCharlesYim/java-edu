@@ -1,10 +1,10 @@
 package com.charles.common.execption;
 
-@SuppressWarnings("all")
+import com.charles.common.domain.ResultCode;
+
 public class BizException extends RuntimeException {
     protected Integer errorCode;
     protected String errorMsg;
-    protected BaseErrorInfoInterface errorInfo;
 
     public BizException() {
         super();
@@ -12,25 +12,25 @@ public class BizException extends RuntimeException {
 
     public BizException(BaseErrorInfoInterface errorInfo) {
         super(errorInfo.getMessage());
-        this.errorInfo = errorInfo;
         this.errorCode = errorInfo.getCode();
         this.errorMsg = errorInfo.getMessage();
     }
 
     public BizException(BaseErrorInfoInterface errorInfo, Throwable cause) {
         super(errorInfo.getMessage(), cause);
-        this.errorInfo = errorInfo;
         this.errorCode = errorInfo.getCode();
         this.errorMsg = errorInfo.getMessage();
     }
 
     public BizException(String errorMsg, Throwable cause) {
         super(errorMsg, cause);
+        this.errorCode = ResultCode.COMMON_FAIL.getCode();
         this.errorMsg = errorMsg;
     }
 
     public BizException(String errorMsg) {
         super(errorMsg);
+        this.errorCode = ResultCode.COMMON_FAIL.getCode();
         this.errorMsg = errorMsg;
     }
 
@@ -54,13 +54,5 @@ public class BizException extends RuntimeException {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
-    }
-
-    public BaseErrorInfoInterface getErrorInfo() {
-        return errorInfo;
-    }
-
-    public void setErrorInfo(BaseErrorInfoInterface errorInfo) {
-        this.errorInfo = errorInfo;
     }
 }

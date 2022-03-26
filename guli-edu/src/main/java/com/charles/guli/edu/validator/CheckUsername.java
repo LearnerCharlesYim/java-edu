@@ -1,7 +1,5 @@
 package com.charles.guli.edu.validator;
 
-import org.springframework.core.annotation.AliasFor;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

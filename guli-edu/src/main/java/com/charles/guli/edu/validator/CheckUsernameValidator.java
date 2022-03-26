@@ -3,6 +3,7 @@ package com.charles.guli.edu.validator;
 import cn.hutool.extra.spring.SpringUtil;
 import com.charles.guli.edu.domain.pojo.User;
 import com.charles.guli.edu.repository.UserRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;

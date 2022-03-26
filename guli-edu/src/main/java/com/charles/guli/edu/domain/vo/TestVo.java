@@ -5,6 +5,7 @@ import com.charles.common.validator.EnumRequired;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class TestVo {
@@ -15,6 +16,7 @@ public class TestVo {
     @NotBlank(message = "姓名不为空")
     private String name;
 
+    private List<TestVo> children;
 
     public enum Gender implements NameValueEnum<Integer> {
         MAN(1, "男"),

@@ -106,4 +106,9 @@ public class MenuService {
         List<Menu> menus = menuRepository.findByStatus(true, Sort.by(Sort.Direction.ASC, "sort"));
         return TreeUtil.generateTree(menus, MenuTree.class);
     }
+
+    public List<Menu> tree3() {
+        List<Menu> menus = menuRepository.findByStatus(true, Sort.by(Sort.Direction.ASC, "sort"));
+        return TreeUtil.generateTree2(menus);
+    }
 }

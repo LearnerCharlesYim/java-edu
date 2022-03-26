@@ -2,8 +2,7 @@ package com.charles.common.utils;
 
 import org.springframework.beans.BeanUtils;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -52,9 +51,30 @@ public class TreeUtil {
         };
     }
 
+    public static <T extends TreeNode<T>> List<T> generateTree2(List<T> list) {
+        List<T> result = new ArrayList<>();
+        Map<Object, T> idNode = new HashMap<>(Math.max((int) (list.size() / .75f) + 1, 16));
+        list.forEach(e -> idNode.put(e.getId(), e));
+        idNode.forEach((id, node) -> {
+            T parentNode = idNode.get(node.getParentId());
+            if (parentNode != null) {
+                List<T> children = parentNode.getChildren();
+                if (children == null) {
+                    children = new ArrayList<>();
+                    parentNode.setChildren(children);
+                }
+                children.add(node);
+            } else {
+                result.add(node);
+            }
+        });
+        return result;
+    }
+
     public interface TreeNode<E> {
         Integer getId();
         Integer getParentId();
         void setChildren(List<E> children);
+        List<E> getChildren();
     }
 }
